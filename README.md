@@ -1,2 +1,3 @@
 # Caso-Integrador-C-a-C-
-## Link: https://github.com/Gmongtor/Caso-Integrador-C-a-C-.git
+## Para poder ver el ejercicio acceda al siguiente enlace:
+https://github.com/Gmongtor/Caso-Integrador-C-a-C-.git
