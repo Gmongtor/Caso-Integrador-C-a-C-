@@ -33,14 +33,23 @@ void load_script(const char* filename, bool show_script = false) {
         }
         console_box->new_text();
         console_box->set_text(script);
-    } catch (...){
+    } catch (...) {
         cerr << "Error al cargar el archivo" << endl;
         if (file) {
             fclose(file);
         }
     }
-
-
-
-
 }
+    void load_script()
+    {
+        char filename[500];
+        printf("Archivo: ");
+        scanf("%499s", filename);
+        load_script(filename, true);
+    }
+
+
+
+
+
+
