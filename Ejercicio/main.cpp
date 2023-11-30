@@ -53,7 +53,10 @@ void load_script(const char* filename, bool show_script = false) {
         scanf("%499s", filename);
         load_script(filename, true);
     }
-
+int main() {
+    load_script();
+    return 0;
+}
 
 
 
