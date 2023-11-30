@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+#include <cstring>
 using namespace std;
 struct ColorConsole {
     static constexpr auto fg_blue = "\033[34m";
@@ -16,33 +17,34 @@ void load_script(const char* filename, bool show_script = false) {
         cerr << "Nombre de archivo inválido o demasiado largo." << endl;
         return;
     }
-    string script;
-    FILE *file = nullptr;
-    try {
-        file = fopen(filename, "rb");
-        if (!file) {
-            throw "Error al abrir el archivo";
-            return;
-        }
-        int c;
-        char buffer[4001];
-        while ((c = fread(buffer, 1, 4000, file)) > 0) {
-            buffer[c] = 0;
-            script.append(buffer);
-        }
-        fclose(file);
-        file = nullptr;
-        if (show_script) {
-            cout << ColorConsole::fg_blue << script << ColorConsole::fg_white << endl;
-        }
-        console_box->new_text();
-        console_box->set_text(script);
-    } catch (...) {
-        cerr << "Error al cargar el archivo" << endl;
-        if (file) {
-            fclose(file);
-        }
+
+    FILE *file = fopen(filename, "rb");
+    if (!file) {
+        perror("Error al abrir el archivo");
+        return;
     }
+
+    string script;
+    char buffer[4001];
+    while (fread(buffer, 1, sizeof(buffer) - 1, file) > 0) {
+        buffer[sizeof(buffer) - 1] = '\0';
+        script.append(buffer);
+    }
+
+    if (ferror(file)) {
+        perror("Error al leer el archivo");
+        fclose(file);
+        return;
+    }
+
+    fclose(file);
+
+    if (show_script) {
+        cout << script << endl;
+    }
+
+    console_box->new_text();
+    console_box->set_text(script);
 }
     void load_script()
     {
