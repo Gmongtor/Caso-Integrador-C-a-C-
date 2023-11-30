@@ -12,6 +12,10 @@ struct ConsoleBox {
 };
 ConsoleBox *console_box = new ConsoleBox;
 void load_script(const char* filename, bool show_script = false) {
+    if (filename == nullptr || strlen(filename) == 0 || strlen(filename) > 499) {
+        cerr << "Nombre de archivo inválido o demasiado largo." << endl;
+        return;
+    }
     string script;
     FILE *file = nullptr;
     try {
