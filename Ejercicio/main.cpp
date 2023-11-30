@@ -10,4 +10,12 @@ struct ConsoleBox {
     void new_text() {/*...*/};
     void set_text (const string &text){cout << text << endl;}
 };
+ConsoleBox *console_box = new ConsoleBox;
+void load_script(const char* filename, bool show_script = false){
+    string script;
+    FILE *file = nullptr;
+    try{
+        file = fopen(filename, "rb");
 
+    }
+}
