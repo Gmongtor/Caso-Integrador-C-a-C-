@@ -16,6 +16,17 @@ void load_script(const char* filename, bool show_script = false){
     FILE *file = nullptr;
     try{
         file = fopen(filename, "rb");
-
+        if(!file) throw "Error al abrir el archivo";
+        return;
     }
+    int c;
+    char buffer[4001];
+    while ((c = fread (buffer, 1, 4000, file)) > 0) {
+        buffer[c] = 0;
+        script.append(buffer);
+    }
+    fclose(file);
+    file = nullptr;
+    if(show_script){
+
 }
