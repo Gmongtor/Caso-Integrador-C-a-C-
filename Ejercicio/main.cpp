@@ -11,22 +11,36 @@ struct ConsoleBox {
     void set_text (const string &text){cout << text << endl;}
 };
 ConsoleBox *console_box = new ConsoleBox;
-void load_script(const char* filename, bool show_script = false){
+void load_script(const char* filename, bool show_script = false) {
     string script;
     FILE *file = nullptr;
-    try{
+    try {
         file = fopen(filename, "rb");
-        if(!file) throw "Error al abrir el archivo";
-        return;
+        if (!file) {
+            throw "Error al abrir el archivo";
+            return;
+        }
+        int c;
+        char buffer[4001];
+        while ((c = fread(buffer, 1, 4000, file)) > 0) {
+            buffer[c] = 0;
+            script.append(buffer);
+        }
+        fclose(file);
+        file = nullptr;
+        if (show_script) {
+            cout << ColorConsole::fg_blue << script << ColorConsole::fg_white << endl;
+        }
+        console_box->new_text();
+        console_box->set_text(script);
+    } catch (...){
+        cerr << "Error al cargar el archivo" << endl;
+        if (file) {
+            fclose(file);
+        }
     }
-    int c;
-    char buffer[4001];
-    while ((c = fread (buffer, 1, 4000, file)) > 0) {
-        buffer[c] = 0;
-        script.append(buffer);
-    }
-    fclose(file);
-    file = nullptr;
-    if(show_script){
+
+
+
 
 }
